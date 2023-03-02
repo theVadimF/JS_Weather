@@ -68,7 +68,7 @@ p {
 .today-extras {
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(2, 200px);
+  grid-template-columns: repeat(2, 250px);
   max-width: 410px;
   /* margin-top: 15px; */
 }
