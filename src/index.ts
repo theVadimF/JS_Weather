@@ -18,6 +18,7 @@ const pressure = document.getElementById('pressure');
 const uv = document.getElementById('uv');
 
 const temp_units = document.querySelectorAll('.temp-unit');
+const today_icon = document.getElementById('today-icon');
 
 function update_ui(weather: any, units: string) {
   location.textContent = weather.location.name;
@@ -46,7 +47,207 @@ function update_ui(weather: any, units: string) {
   }
   today_cond.textContent = weather.current.condition.text;
   uv.textContent = weather.current.uv;
+  set_icon(weather.current.condition.code);
+}
 
+function set_icon(code: number) {
+  reset_icon();
+  switch(code) {
+    case 1000: {  // Sunny
+      today_icon.classList.add('la-sun');
+      break;
+    }
+    case 1003: {  // Partly cloudy
+      today_icon.classList.add('la-cloud-sun');
+      break;
+    }
+    case 1006: {  // Cloudy
+      today_icon.classList.add('la-cloud');
+      break;
+    }
+    case 1009: {  // Overcast
+      today_icon.classList.add('la-cloud');
+      break;
+    }
+    case 1030: {  // Mist
+      today_icon.classList.add('la-water');
+      break;
+    }
+    case 1063: {  // Patchy rain possible
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1066: {  // Patchy snow possible
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1069: {  // Patchy sleet possible
+      today_icon.classList.add('la-cloud-meatball');
+      break;
+    }
+    case 1072: {  // Patchy freezing drizzle possible
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1087: {  // Thundery outbreaks possible
+      today_icon.classList.add('la-bolt');
+      break;
+    }
+    case 1114: {  // Blowing snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1117: {  // Blizzard
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1135: {  // Fog
+      today_icon.classList.add('la-smog');
+      break;
+    }
+    case 1147: {  // Fog
+      today_icon.classList.add('la-smog');
+      break;
+    }
+    case 1150: {  // Patchy light drizzle
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1153: {  // light drizzle
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1168: {  // freezing drizzle
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1180: {  // Patchy light rain
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1183: {  // light rain
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1186: {  // Moderate rain at times
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1189: {  // Moderate rain
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1192: {  // Heavy rain
+      today_icon.classList.add('la-cloud-showers-heavy');
+      break;
+    }
+    case 1195: {  // Heavy rain
+      today_icon.classList.add('la-cloud-showers-heavy');
+      break;
+    }
+    case 1198: {  // Moderate rain
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1201: {  // Heavy rain
+      today_icon.classList.add('la-cloud-showers-heavy');
+      break;
+    }
+    case 1204: {  // sleet
+      today_icon.classList.add('la-cloud-meatball');
+      break;
+    }
+    case 1207: {  // sleet
+      today_icon.classList.add('la-cloud-meatball');
+      break;
+    }
+    case 1210: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1213: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1216: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1219: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1222: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1225: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1237: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1240: {  // Moderate rain
+      today_icon.classList.add('la-cloud-rain');
+      break;
+    }
+    case 1243: {  // Heavy rain
+      today_icon.classList.add('la-cloud-showers-heavy');
+      break;
+    }
+    case 1246: {  // Heavy rain
+      today_icon.classList.add('la-cloud-showers-heavy');
+      break;
+    }
+    case 1252: {  // sleet
+      today_icon.classList.add('la-cloud-meatball');
+      break;
+    }
+    case 1255: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1258: {  // Snow
+      today_icon.classList.add('la-snowflake');
+      break;
+    }
+    case 1261: {  // sleet
+      today_icon.classList.add('la-cloud-meatball');
+      break;
+    }
+    case 1264: {  // sleet
+      today_icon.classList.add('la-cloud-meatball');
+      break;
+    }
+    case 1273: {  // Thunder
+      today_icon.classList.add('la-bolt');
+      break;
+    }
+    case 1276: {  // Thunder
+      today_icon.classList.add('la-bolt');
+      break;
+    }
+    case 1279: {  // Thunder
+      today_icon.classList.add('la-bolt');
+      break;
+    }
+    case 1282: {  // Thunder
+      today_icon.classList.add('la-bolt');
+      break;
+    }
+    default: {
+      today_icon.classList.add('la-poo-storm');
+      break;
+    }
+  }
+}
+
+function reset_icon() {
+  today_icon.className = '';
+  today_icon.classList.add('today-icon');
+  today_icon.classList.add('las');
 }
 
 async function get_weather(location: string) {
