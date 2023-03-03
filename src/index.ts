@@ -4,8 +4,23 @@ import 'line-awesome/dist/line-awesome/css/line-awesome.css'
 
 // TODO(vf) Move to github secrets
 import {API_KEY} from './secret'
-let units: string = "metric"
+let metric_unit: boolean = true;
+let location_name = 'Novosibirsk';
+let weather_data: any = null;
 
+// Buttons
+const search = document.getElementById('search');
+const close_btn = document.getElementById('close-btn');
+const submit_btn = document.getElementById('submit-btn');
+const reload = document.getElementById('reload');
+const swap_units = document.getElementById('swap-units');
+
+// UI Elements
+const overlay = document.getElementById('overlay');
+const location_input = (<HTMLInputElement>document.getElementById('location-input'));
+const error_text = document.getElementById('location-error');
+
+// Weather Now
 const today_temp = document.getElementById('today-temp');
 const today_cond = document.getElementById('today-condition');
 const location = document.getElementById('location');
@@ -16,13 +31,49 @@ const wind_speed = document.getElementById('wind-speed')
 const precipitation = document.getElementById('precipitation');
 const pressure = document.getElementById('pressure');
 const uv = document.getElementById('uv');
-
 const temp_units = document.querySelectorAll('.temp-unit');
 const today_icon = document.getElementById('today-icon');
+const top_temp = document.getElementById('top-temp');
 
-function update_ui(weather: any, units: string) {
+search.addEventListener('click', () => {
+  error_text.textContent = "";
+  location_input.value = "";
+  overlay.classList.remove('hidden');
+})
+
+close_btn.addEventListener('click', () => {
+  overlay.classList.add('hidden')
+})
+
+reload.addEventListener('click', () => {
+  load_weather();
+})
+
+swap_units.addEventListener('click', () => {
+  if (weather_data !== null && !("error" in weather_data)) {
+    if (metric_unit) {
+      metric_unit = false;
+    } else {
+      metric_unit = true;
+    }
+    update_ui(weather_data, metric_unit);
+  }
+})
+
+submit_btn.addEventListener('click', () => {
+  if (location_input.value.length != 0) {
+    location_name = location_input.value;
+    location.textContent = location_name;
+    load_weather();
+    overlay.classList.add('hidden');
+  } else {
+    error_text.textContent = "Location can't be blank"
+  }
+})
+
+function update_ui(weather: any, metric_unit: boolean) {
   location.textContent = weather.location.name;
-  if (units == 'c') {
+  if (metric_unit) {
     temp_units.forEach((unit) => {
       unit.textContent = "°C";
     })
@@ -43,11 +94,40 @@ function update_ui(weather: any, units: string) {
     feels_like.textContent = weather.current.feelslike_f;
     wind_speed.textContent = weather.current.wind_mph + ' mp/h';
     precipitation.textContent = weather.current.precip_in + ' in';
-    pressure.textContent = weather.current.pressure_in + ' in'; // TODO(vf) unit
+    pressure.textContent = weather.current.pressure_in + ' inHg';
   }
   today_cond.textContent = weather.current.condition.text;
   uv.textContent = weather.current.uv;
   set_icon(weather.current.condition.code);
+}
+
+function ui_na() {
+  top_temp.textContent = "";
+  today_temp.textContent = "N/A";
+  min_temp.textContent = "N/A";
+  max_temp.textContent = "N/A";
+  feels_like.textContent = "N/A";
+  wind_speed.textContent = "N/A";
+  precipitation.textContent = "N/A";
+  pressure.textContent = "N/A";
+  today_cond.textContent = "N/A";
+  uv.textContent = "N/A";
+}
+
+function display_error(err: string) {
+  ui_na();
+  reset_icon();
+  today_temp.textContent = 'Error';
+  today_cond.textContent = err;
+  today_icon.classList.add('la-exclamation-triangle');
+}
+
+function display_updating() {
+  ui_na();
+  reset_icon();
+  today_temp.textContent = 'Updating...';
+  today_cond.textContent = 'Please wait';
+  today_icon.classList.add('la-sync');
 }
 
 function set_icon(code: number) {
@@ -256,41 +336,36 @@ async function get_weather(location: string) {
     const weather = await response.json();
     return weather;
   } catch(err) {
-    console.error(err);
+    display_error("Network Error");
   }
 }
 
-// async function get_weather(lat: number, lon: number) {
-//   try {
-//     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`);
-//     const weather = await response.json();
-//     // console.log(weather);
-//     return weather;
-//   } catch(err) {
-//     console.error(err);
-//   }
-// }
+function timeoutPromise(delay: number) {
+	return new Promise( function(resolve,reject){
+		setTimeout( function(){
+			reject( "Request timeout" );
+		}, delay );
+	} );
+}
 
-// async function get_weather_by_name(name: string) {
-//   try {
-//     const location = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${name}&limit=1&appid=${API_KEY}`);
-//     const data = await location.json();
-//     if (data.length != 0) {
-//       // console.log(data[0]);
-//       return await get_weather(data[0].lat, data[0].lon);
-//     } else {
-//       throw new Error("Location not found")
-//     }
-//   } catch(err) {
-//     console.error(err);
-//   }
-// }
+async function load_weather() {
+  display_updating();
+  Promise.race([
+    get_weather(location_name),
+    timeoutPromise(5000)
+  ]).then((weather) => {
+      if (weather !== undefined) {
+        weather_data = weather;
+        if ("error" in weather) {
+          display_error(weather.error.message);
+        } else {
+          console.log(weather);
+          update_ui(weather, metric_unit);
+        }
+      }
+  }, (err) => {
+    display_error(err);
+  })
+}
 
-
-// TODO(vf) Detect if city not found
-get_weather('novosibirsk')
-  .then((weather) => {
-    console.log(weather);
-    update_ui(weather, 'c');
-  });
-// get_weather_by_name('ijkegregrijgriojegr')
+load_weather();

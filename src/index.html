@@ -11,10 +11,23 @@
     <div class="frosted-glass today-panel">
       <div class="today-status">
         <i class="today-icon las la-cloud-rain" id="today-icon"></i>
-        <p class="today-temp"><span id="today-temp">25</span><span class="temp-unit">&#176;C</span></p>
+        <div class="status-top">
+          <p class="today-temp"><span id="today-temp">25</span><span class="temp-unit" id="top-temp">&#176;C</span></p>
+          <div class="top-buttons">
+            <a href="#" class="top-btn" id="swap-units">
+              <p>&#176;C/&#176;F</p>
+            </a>
+            <a href="#" class="top-btn" id="reload">
+              <i class="las la-sync"></i>
+            </a>
+            <a href="#" class="top-btn" id="search">
+              <i class="las la-search"></i>
+            </a>
+          </div>
+        </div>
         <p class="today-condition" id="today-condition">Rain</p>
       </div>
-      <p class="location" id="location">Nowhere Land</p>
+      <p class="location" id="location"></p>
       <div class="today-extras">
         <div class="extra-container">
           <i class="extra-icon las la-thermometer-half"></i>
@@ -53,6 +66,21 @@
           <p class="extra-info" id="uv">0.0</p>
           <p class="extra-name">UV Index</p>
         </div>
+      </div>
+    </div>
+    <div class="overlay hidden" id="overlay">
+      <div class="search-popup">
+        <div class="header-box">
+          <h1 class="heading">Enter Location Name</h1>
+          <a href="#" id="close-btn" class="close-btn">
+            <i class="las la-times"></i>
+          </a>
+        </div>
+        <div class="location-box">
+          <input type="text" class="text" name="location" id="location-input" placeholder="Location">
+          <button class="submit-btn" id="submit-btn">Submit</button>
+        </div>
+        <p class="error-text" id="location-error"></p>
       </div>
     </div>
   </div>
