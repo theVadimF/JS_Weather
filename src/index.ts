@@ -318,7 +318,7 @@ function set_icon(code: number) {
       break;
     }
     default: {
-      today_icon.classList.add('la-poo-storm');
+      today_icon.classList.add('la-question-circle');
       break;
     }
   }
