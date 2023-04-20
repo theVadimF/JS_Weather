@@ -8,64 +8,66 @@
 </head>
 <body>
   <div class="main-wrapper">
-    <div class="frosted-glass today-panel">
-      <div class="today-status">
-        <i class="today-icon las la-cloud-rain" id="today-icon"></i>
-        <div class="status-top">
-          <p class="today-temp"><span id="today-temp">25</span><span class="temp-unit" id="top-temp">&#176;C</span></p>
-          <div class="top-buttons">
-            <a href="#" class="top-btn" id="swap-units">
-              <p>&#176;C/&#176;F</p>
-            </a>
-            <a href="#" class="top-btn" id="reload">
-              <i class="las la-sync"></i>
-            </a>
-            <a href="#" class="top-btn" id="search">
-              <i class="las la-search"></i>
-            </a>
+    <div class="today-panel-wrap">
+      <div class="frosted-glass today-panel">
+        <div class="today-status">
+          <i class="today-icon las la-cloud-rain" id="today-icon"></i>
+          <div class="status-top">
+            <p class="today-temp"><span id="today-temp">25</span><span class="temp-unit" id="top-temp">&#176;C</span></p>
+          </div>
+          <p class="today-condition" id="today-condition">Rain</p>
+        </div>
+        <p class="location" id="location"></p>
+        <div class="today-extras">
+          <div class="extra-container">
+            <i class="extra-icon las la-thermometer-half"></i>
+            <p class="extra-info">
+              <i class="las la-long-arrow-alt-down"></i>
+              <span id="min-temp">23</span><span class="temp-unit">&#176;C</span>
+              <i class="las la-long-arrow-alt-up"></i>
+              <span id="max-temp">28</span><span class="temp-unit">&#176;C</span>
+            </p>
+            <p class="extra-name">Min | Max</p>
+          </div>
+          <div class="extra-container">
+            <i class="extra-icon las la-temperature-high"></i>
+            <p class="extra-info">
+              <span id="feels-like">23</span><span class="temp-unit">&#176;C</span>
+            </p>
+            <p class="extra-name">Feels Like</p>
+          </div>
+          <div class="extra-container">
+            <i class="extra-icon las la-wind"></i>
+            <p class="extra-info" id="wind-speed">5 km/h</p>
+            <p class="extra-name">Wind Speed</p>
+          </div>
+          <div class="extra-container">
+            <i class="extra-icon las la-tint"></i>
+            <p class="extra-info" id="precipitation">98%</p>
+            <p class="extra-name">Precipitation</p>
+          </div>
+          <div class="extra-container">
+            <i class="extra-icon las la-dot-circle"></i>
+            <p class="extra-info" id="pressure">10100 hPa</p>
+            <p class="extra-name">Pressure</p>
+          </div>
+          <div class="extra-container">
+            <i class="extra-icon las la-sun"></i>
+            <p class="extra-info" id="uv">0.0</p>
+            <p class="extra-name">UV Index</p>
           </div>
         </div>
-        <p class="today-condition" id="today-condition">Rain</p>
       </div>
-      <p class="location" id="location"></p>
-      <div class="today-extras">
-        <div class="extra-container">
-          <i class="extra-icon las la-thermometer-half"></i>
-          <p class="extra-info">
-            <i class="las la-long-arrow-alt-down"></i>
-            <span id="min-temp">23</span><span class="temp-unit">&#176;C</span>
-            <i class="las la-long-arrow-alt-up"></i>
-            <span id="max-temp">28</span><span class="temp-unit">&#176;C</span>
-          </p>
-          <p class="extra-name">Min | Max</p>
-        </div>
-        <div class="extra-container">
-          <i class="extra-icon las la-temperature-high"></i>
-          <p class="extra-info">
-            <span id="feels-like">23</span><span class="temp-unit">&#176;C</span>
-          </p>
-          <p class="extra-name">Feels Like</p>
-        </div>
-        <div class="extra-container">
-          <i class="extra-icon las la-wind"></i>
-          <p class="extra-info" id="wind-speed">5 km/h</p>
-          <p class="extra-name">Wind Speed</p>
-        </div>
-        <div class="extra-container">
-          <i class="extra-icon las la-tint"></i>
-          <p class="extra-info" id="precipitation">98%</p>
-          <p class="extra-name">Precipitation</p>
-        </div>
-        <div class="extra-container">
-          <i class="extra-icon las la-dot-circle"></i>
-          <p class="extra-info" id="pressure">10100 hPa</p>
-          <p class="extra-name">Pressure</p>
-        </div>
-        <div class="extra-container">
-          <i class="extra-icon las la-sun"></i>
-          <p class="extra-info" id="uv">0.0</p>
-          <p class="extra-name">UV Index</p>
-        </div>
+      <div class="config-buttons">
+        <button href="#" class="config-btn frosted-glass" id="swap-units">
+          <p>&#176;C/&#176;F</p>
+        </>
+        <button href="#" class="config-btn frosted-glass" id="reload">
+          <i class="las la-sync"></i>
+        </button>
+        <button href="#" class="config-btn frosted-glass" id="search">
+          <i class="las la-search"></i>
+        </button>
       </div>
     </div>
     <div class="overlay hidden" id="overlay">

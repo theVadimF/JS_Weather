@@ -31,7 +31,7 @@ a {
 }
 
 .today-panel {
-  width: 500px;
+  max-width: 500px;
   height: fit-content;
   /* margin: 20px; */
   margin-top: 20px;
@@ -59,18 +59,19 @@ a {
   justify-content: space-between;
 }
 
-.top-buttons {
+.config-buttons {
   display: flex;
   gap: 10px;
 }
 
-.top-btn {
-  background-color: rgba(255, 255, 255, 0.3);
-  padding: 5px;
-  border-radius: 10px;
+.config-btn {
+  border: none;
+  padding: 10px;
+  border-radius: 30px;
   font-size: 1.5em;
   height: fit-content;
   display: flex;
+  color: white;
 }
 
 .top-btn p {
@@ -210,9 +211,22 @@ a {
   margin: 0;
 }
 
-/* .error-text {
-  color: rgb(143, 0, 0);
-} */
+.today-panel-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 620px) {
+  .today-extras {
+    grid-template-columns: 1fr;
+  }
+
+  .today-panel {
+    width: 100%;
+    margin: 10px;
+  }
+}
 
 .hidden {
   visibility: hidden;
