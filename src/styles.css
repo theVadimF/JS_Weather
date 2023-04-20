@@ -2,6 +2,10 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background: url('bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 p {
@@ -14,10 +18,7 @@ a {
 }
 
 .main-wrapper {
-  background: url('bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100dvh;
+  height: 100%;
   margin: 0;
   display: flex;
   color: white;
@@ -31,15 +32,15 @@ a {
 }
 
 .today-panel {
-  max-width: 500px;
+  max-width: 550px;
   height: fit-content;
-  /* margin: 20px; */
   margin-top: 20px;
   border-radius: 30px;
   display: flex;
   gap: 10px;
   flex-direction: column;
   padding: 25px 40px;
+  box-sizing: border-box;
 }
 
 .today-status {
@@ -62,6 +63,7 @@ a {
 .config-buttons {
   display: flex;
   gap: 10px;
+  float: left;
 }
 
 .config-btn {
@@ -104,12 +106,6 @@ a {
   grid-template-columns: repeat(2, 270px);
 }
 
-.test {
-  background-color: blue;
-  border: 1px solid red;
-  width: 100%;
-}
-
 .extra-container {
   display: grid;
   grid-template-rows: 35px 25px;
@@ -145,7 +141,6 @@ a {
   display: flex;
   backdrop-filter: blur(10px);
   justify-content: center;
-  /* align-items: center; */
 }
 
 .search-popup {
@@ -213,18 +208,28 @@ a {
 
 .today-panel-wrap {
   display: flex;
+  width: fit-content;
   flex-direction: column;
   gap: 10px;
 }
 
-@media (max-width: 620px) {
+@media (max-width: 560px) {
   .today-extras {
     grid-template-columns: 1fr;
   }
 
   .today-panel {
-    width: 100%;
+    width: calc(100% - 20px);
     margin: 10px;
+    margin-bottom: 0px;
+  }
+
+  .today-panel-wrap {
+    width: 100%;
+  }
+
+  .config-buttons {
+    margin-left: 10px;
   }
 }
 
