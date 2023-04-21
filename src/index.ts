@@ -35,6 +35,9 @@ const temp_units = document.querySelectorAll('.temp-unit');
 const today_icon = document.getElementById('today-icon');
 const top_temp = document.getElementById('top-temp');
 
+// Forecast
+const daily_forecast = document.querySelector('.daily-forecast')
+
 search.addEventListener('click', () => {
   error_text.textContent = "";
   location_input.value = "";
@@ -98,7 +101,99 @@ function update_ui(weather: any, metric_unit: boolean) {
   }
   today_cond.textContent = weather.current.condition.text;
   uv.textContent = weather.current.uv;
-  set_icon(weather.current.condition.code);
+  reset_icon();
+  today_icon.classList.add(get_icon(weather.current.condition.code));
+}
+
+function getDayOfWeek(date: string) {
+  const dayOfWeek = new Date(date).getDay();
+  return isNaN(dayOfWeek) ? null : 
+    ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
+}
+
+function gen_forecast(weather: any, metric_unit: boolean) {
+  // TODO(vf) Clear out old cards
+  weather.forecast.forecastday.map((item: any) => {
+    // console.log(item);
+    const card = document.createElement('div');
+    card.classList.add('daily-card');
+    card.classList.add('frosted-glass');
+
+    const icon = document.createElement('i');
+    icon.classList.add('extra-icon');
+    icon.classList.add('las');
+    icon.classList.add(get_icon(item.day.condition.code));
+    card.appendChild(icon);
+
+    const weekday = document.createElement('p');
+    weekday.classList.add('forecast-day');
+    weekday.textContent = getDayOfWeek(item.date);
+    card.appendChild(weekday);
+
+    const daily_stats = document.createElement('div');
+    daily_stats.classList.add('daily-stats');
+    const stat_wrap = document.createElement('p');
+
+    const therm_icon = document.createElement('i');
+    therm_icon.classList.add('forecast-extra-icon');
+    therm_icon.classList.add('las');
+    therm_icon.classList.add('la-thermometer-half');
+    stat_wrap.appendChild(therm_icon);
+
+    const down_arrow = document.createElement('i');
+    down_arrow.classList.add('forecast-extra-icon');
+    down_arrow.classList.add('las');
+    down_arrow.classList.add('la-long-arrow-alt-down');
+    stat_wrap.appendChild(down_arrow);
+
+    const min_temp = document.createElement('span');
+    const unit = document.createElement('span');
+    // TODO(vf) move temp unit check elsewhere
+    unit.classList.add('temp-unit')
+    if (metric_unit) {
+      min_temp.textContent = item.day.mintemp_c;
+      unit.textContent = "°C";
+    } else {
+      min_temp.textContent = item.day.mintemp_f;
+      unit.textContent = "°F"
+    }
+    min_temp.appendChild(unit);
+    stat_wrap.appendChild(min_temp);
+
+    const up_arrow = document.createElement('i');
+    up_arrow.classList.add('forecast-extra-icon');
+    up_arrow.classList.add('las');
+    up_arrow.classList.add('la-long-arrow-alt-up');
+    stat_wrap.appendChild(up_arrow);
+
+    const max_temp = document.createElement('span');
+    const unit2 = unit.cloneNode(true)
+    if (metric_unit) {
+      max_temp.textContent = item.day.maxtemp_c;
+    } else {
+      max_temp.textContent = item.day.maxtemp_f;
+    }
+    max_temp.appendChild(unit2);
+    stat_wrap.appendChild(max_temp);
+
+    // const spacer = document.createElement('div');
+    // spacer.classList.add('stat-spacer');
+    // stat_wrap.appendChild(spacer);
+
+    const umbrella = document.createElement('i');
+    umbrella.classList.add('las');
+    umbrella.classList.add('la-umbrella');
+    stat_wrap.appendChild(umbrella);
+
+    // TODO(vf) Snow chance
+    const rain_chance = document.createElement('span');
+    rain_chance.textContent = item.day.daily_chance_of_rain + '%';
+    stat_wrap.append(rain_chance);
+
+    daily_stats.append(stat_wrap);
+    card.appendChild(daily_stats);
+    daily_forecast.appendChild(card);
+  })
 }
 
 function ui_na() {
@@ -130,196 +225,148 @@ function display_updating() {
   today_icon.classList.add('la-sync');
 }
 
-function set_icon(code: number) {
-  reset_icon();
+function get_icon(code: number) {
   switch(code) {
     case 1000: {  // Sunny
-      today_icon.classList.add('la-sun');
-      break;
+      return 'la-sun';
     }
     case 1003: {  // Partly cloudy
-      today_icon.classList.add('la-cloud-sun');
-      break;
+      return 'la-cloud-sun';
     }
     case 1006: {  // Cloudy
-      today_icon.classList.add('la-cloud');
-      break;
+      return 'la-cloud';
     }
     case 1009: {  // Overcast
-      today_icon.classList.add('la-cloud');
-      break;
+      return 'la-cloud';
     }
     case 1030: {  // Mist
-      today_icon.classList.add('la-water');
-      break;
+      return 'la-water';
     }
     case 1063: {  // Patchy rain possible
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1066: {  // Patchy snow possible
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1069: {  // Patchy sleet possible
-      today_icon.classList.add('la-cloud-meatball');
-      break;
+      return 'la-cloud-meatball';
     }
     case 1072: {  // Patchy freezing drizzle possible
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1087: {  // Thundery outbreaks possible
-      today_icon.classList.add('la-bolt');
-      break;
+      return 'la-bolt';
     }
     case 1114: {  // Blowing snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1117: {  // Blizzard
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1135: {  // Fog
-      today_icon.classList.add('la-smog');
-      break;
+      return 'la-smog';
     }
     case 1147: {  // Fog
-      today_icon.classList.add('la-smog');
-      break;
+      return 'la-smog';
     }
     case 1150: {  // Patchy light drizzle
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1153: {  // light drizzle
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1168: {  // freezing drizzle
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1180: {  // Patchy light rain
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1183: {  // light rain
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1186: {  // Moderate rain at times
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1189: {  // Moderate rain
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1192: {  // Heavy rain
-      today_icon.classList.add('la-cloud-showers-heavy');
-      break;
+      return 'la-cloud-showers-heavy';
     }
     case 1195: {  // Heavy rain
-      today_icon.classList.add('la-cloud-showers-heavy');
-      break;
+      return 'la-cloud-showers-heavy';
     }
     case 1198: {  // Moderate rain
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1201: {  // Heavy rain
-      today_icon.classList.add('la-cloud-showers-heavy');
-      break;
+      return 'la-cloud-showers-heavy';
     }
     case 1204: {  // sleet
-      today_icon.classList.add('la-cloud-meatball');
-      break;
+      return 'la-cloud-meatball';
     }
     case 1207: {  // sleet
-      today_icon.classList.add('la-cloud-meatball');
-      break;
+      return 'la-cloud-meatball';
     }
     case 1210: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1213: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1216: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1219: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1222: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1225: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1237: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1240: {  // Moderate rain
-      today_icon.classList.add('la-cloud-rain');
-      break;
+      return 'la-cloud-rain';
     }
     case 1243: {  // Heavy rain
-      today_icon.classList.add('la-cloud-showers-heavy');
-      break;
+      return 'la-cloud-showers-heavy';
     }
     case 1246: {  // Heavy rain
-      today_icon.classList.add('la-cloud-showers-heavy');
-      break;
+      return 'la-cloud-showers-heavy';
     }
     case 1252: {  // sleet
-      today_icon.classList.add('la-cloud-meatball');
-      break;
+      return 'la-cloud-meatball';
     }
     case 1255: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1258: {  // Snow
-      today_icon.classList.add('la-snowflake');
-      break;
+      return 'la-snowflake';
     }
     case 1261: {  // sleet
-      today_icon.classList.add('la-cloud-meatball');
-      break;
+      return 'la-cloud-meatball';
     }
     case 1264: {  // sleet
-      today_icon.classList.add('la-cloud-meatball');
-      break;
+      return 'la-cloud-meatball';
     }
     case 1273: {  // Thunder
-      today_icon.classList.add('la-bolt');
-      break;
+      return 'la-bolt';
     }
     case 1276: {  // Thunder
-      today_icon.classList.add('la-bolt');
-      break;
+      return 'la-bolt';
     }
     case 1279: {  // Thunder
-      today_icon.classList.add('la-bolt');
-      break;
+      return 'la-bolt';
     }
     case 1282: {  // Thunder
-      today_icon.classList.add('la-bolt');
-      break;
+      return 'la-bolt';
     }
     default: {
-      today_icon.classList.add('la-question-circle');
-      break;
+      return 'la-question-circle';
     }
   }
 }
@@ -359,8 +406,10 @@ async function load_weather() {
         if ("error" in weather) {
           display_error(weather.error.message);
         } else {
+          // TODO(vf) Remove before release
           console.log(weather);
           update_ui(weather, metric_unit);
+          gen_forecast(weather, metric_unit);
         }
       }
   }, (err) => {
