@@ -154,7 +154,6 @@ function gen_forecast(weather: any, metric_unit: boolean) {
 
     const min_temp = document.createElement('span');
     const unit = document.createElement('span');
-    // TODO(vf) move temp unit check elsewhere
     unit.classList.add('temp-unit')
     if (metric_unit) {
       min_temp.textContent = item.day.mintemp_c;
@@ -403,6 +402,7 @@ function timeoutPromise(delay: number) {
 
 async function load_weather() {
   display_updating();
+  clear_child(daily_forecast);
   Promise.race([
     get_weather(location_name),
     timeoutPromise(5000)
@@ -412,8 +412,6 @@ async function load_weather() {
         if ("error" in weather) {
           display_error(weather.error.message);
         } else {
-          // TODO(vf) Remove before release
-          console.log(weather);
           update_ui(weather, metric_unit);
           gen_forecast(weather, metric_unit);
         }
