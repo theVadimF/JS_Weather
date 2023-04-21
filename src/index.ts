@@ -111,8 +111,14 @@ function getDayOfWeek(date: string) {
     ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
 }
 
+function clear_child(e: Element) {
+  while (e.firstChild) {
+    e.removeChild(e.firstChild);
+  }
+}
+
 function gen_forecast(weather: any, metric_unit: boolean) {
-  // TODO(vf) Clear out old cards
+  clear_child(daily_forecast);
   weather.forecast.forecastday.map((item: any) => {
     // console.log(item);
     const card = document.createElement('div');
@@ -176,9 +182,9 @@ function gen_forecast(weather: any, metric_unit: boolean) {
     max_temp.appendChild(unit2);
     stat_wrap.appendChild(max_temp);
 
-    // const spacer = document.createElement('div');
-    // spacer.classList.add('stat-spacer');
-    // stat_wrap.appendChild(spacer);
+    const spacer = document.createElement('span');
+    spacer.textContent = " ";
+    stat_wrap.appendChild(spacer);
 
     const umbrella = document.createElement('i');
     umbrella.classList.add('las');
