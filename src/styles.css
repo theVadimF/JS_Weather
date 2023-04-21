@@ -6,6 +6,8 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  display: flex;
+  justify-content: center;
 }
 
 p {
@@ -21,8 +23,10 @@ a {
   height: 100%;
   margin: 0;
   display: flex;
+  flex-direction: column;
   color: white;
   justify-content: center;
+  align-content: center;
 }
 
 .frosted-glass {
@@ -213,15 +217,53 @@ a {
   gap: 10px;
 }
 
+.daily-card {
+  display: grid;
+  grid-template-rows: 20px 23px;
+  grid-template-columns: 60px 1fr;
+  width: 100%;
+  padding: 10px 25px;
+  border-radius: 30px;
+  gap: 5px;
+  box-sizing: border-box;
+}
+
+.daily-stats {
+  display: flex;
+  align-items: center;
+  font-size: 23px;
+  gap: 5px;
+  font-weight: 400;
+}
+
+.forecast-extra-icon {
+  margin: -5px;
+}
+
+.stat-spacer {
+  margin-left: 5px;
+}
+
+.forecast-day {
+  font-size: 20px;
+}
+
+.daily-forecast {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 @media (max-width: 560px) {
   .today-extras {
     grid-template-columns: 1fr;
   }
 
   .today-panel {
-    width: calc(100% - 20px);
-    margin: 10px;
+    width: 100%;
     margin-bottom: 0px;
+    padding: 20px;
   }
 
   .today-panel-wrap {
@@ -230,6 +272,32 @@ a {
 
   .config-buttons {
     margin-left: 10px;
+  }
+
+  .main-wrapper {
+    width: calc(100% - 20px);;
+  }
+
+  .daily-card {
+    padding: 15px 20px;
+    grid-template-rows: 20px 22px;
+    grid-template-columns: 60px 1fr;
+  }
+
+  .forecast-day {
+    font-size: 20px;
+  }
+
+  .forecast-extra-icon {
+    font-size: 20px;
+  }
+
+  .daily-stats {
+    font-size: 20px;
+  }
+
+  .stat-spacer {
+    margin-left: 0px;
   }
 }
 
