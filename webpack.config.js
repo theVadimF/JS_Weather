@@ -17,7 +17,7 @@ module.exports = {
       }, {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
-      },
+      }
     ],
   },
   resolve: {
@@ -27,6 +27,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       // When manual html is needed
       template: './src/index.html',
+      minify: false,
     }),
   ],
   output: {
@@ -38,5 +39,5 @@ module.exports = {
     port: 3000,
     open: true,
     hot: true,
-  },
+  }
 };

@@ -68,11 +68,6 @@ a {
   justify-self: left;
 }
 
-.status-top {
-  display: flex;
-  justify-content: space-between;
-}
-
 .config-buttons {
   display: flex;
   gap: 10px;
@@ -240,11 +235,11 @@ a {
 }
 
 .daily-stats {
-  display: flex;
-  align-items: center;
   font-size: 23px;
-  gap: 5px;
   font-weight: 400;
+  display: flex;
+  justify-content: space-between;
+  max-width: 240px;
 }
 
 .forecast-extra-icon {
@@ -275,7 +270,7 @@ a {
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 630px) {
   .today-extras {
     grid-template-columns: 1fr;
   }
@@ -284,6 +279,7 @@ a {
     width: 100%;
     margin-bottom: 0px;
     padding: 20px;
+    max-width: none;
   }
 
   .today-panel-wrap {

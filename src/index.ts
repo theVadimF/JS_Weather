@@ -138,13 +138,9 @@ function gen_forecast(weather: any, metric_unit: boolean) {
 
     const daily_stats = document.createElement('div');
     daily_stats.classList.add('daily-stats');
-    const stat_wrap = document.createElement('p');
 
-    const therm_icon = document.createElement('i');
-    therm_icon.classList.add('forecast-extra-icon');
-    therm_icon.classList.add('las');
-    therm_icon.classList.add('la-thermometer-half');
-    stat_wrap.appendChild(therm_icon);
+    const stat_wrap = document.createElement('p');
+    stat_wrap.classList.add('daily-stats')
 
     const down_arrow = document.createElement('i');
     down_arrow.classList.add('forecast-extra-icon');
@@ -185,18 +181,22 @@ function gen_forecast(weather: any, metric_unit: boolean) {
     spacer.textContent = " ";
     stat_wrap.appendChild(spacer);
 
+    const rain_wrap = document.createElement('span');
+    rain_wrap.classList.add('daily-stats');
+
     const umbrella = document.createElement('i');
     umbrella.classList.add('las');
     umbrella.classList.add('la-umbrella');
-    stat_wrap.appendChild(umbrella);
+    rain_wrap.appendChild(umbrella);
 
-    // TODO(vf) Snow chance
     const rain_chance = document.createElement('span');
     rain_chance.textContent = item.day.daily_chance_of_rain + '%';
-    stat_wrap.append(rain_chance);
+    rain_wrap.append(rain_chance);
 
     daily_stats.append(stat_wrap);
+    daily_stats.append(rain_wrap);
     card.appendChild(daily_stats);
+    // card.appendChild(stat_wrap);
     daily_forecast.appendChild(card);
   })
 }
@@ -384,7 +384,7 @@ function reset_icon() {
 
 async function get_weather(location: string) {
   try {
-    const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=3&aqi=no&alerts=no`, {mode: 'cors'});
+    const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=3&aqi=no&alerts=no`, {mode: 'cors'});
     const weather = await response.json();
     return weather;
   } catch(err) {
