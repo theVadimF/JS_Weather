@@ -145,8 +145,8 @@ a {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100dvh;
-  width: 100dvw;
+  height: 100lvh;
+  width: 100lvw;
   z-index: 1;
   display: flex;
   backdrop-filter: blur(10px);
