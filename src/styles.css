@@ -16,7 +16,6 @@ body {
   background-attachment: fixed;
   display: flex;
   justify-content: center;
-  height: 100lvh;
 }
 
 p {
