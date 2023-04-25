@@ -119,6 +119,11 @@ function clear_child(e: Element) {
 
 function gen_forecast(weather: any, metric_unit: boolean) {
   clear_child(daily_forecast);
+  weather.forecast.forecastday.push(weather.forecast.forecastday[0]);
+  weather.forecast.forecastday.push(weather.forecast.forecastday[0]);
+  weather.forecast.forecastday.push(weather.forecast.forecastday[0]);
+  weather.forecast.forecastday.push(weather.forecast.forecastday[0]);
+  weather.forecast.forecastday.push(weather.forecast.forecastday[0]);
   weather.forecast.forecastday.map((item: any) => {
     // console.log(item);
     const card = document.createElement('div');
